@@ -15,16 +15,19 @@
 :root,
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #090d16;          /* Malalim na madilim na asul para sa puyat na mata */
-  --card: #101726;        /* Soft dark card background */
-  --ink: #e2e8f0;         /* Malambot na puti/silver para sa teksto */
-  --mute: #8a99b5;        /* Subdued text para di masakit sa mata */
-  --accent: #2dd4bf;      /* Calming Mint / Teal accent */
+  --bg: #090d16;          
+  --card: #101726;        
+  --ink: #e2e8f0;         
+  --mute: #8a99b5;        
+  --accent: #2dd4bf;      
   --accent-ink: #04201c;  
   --warn: #fbbf24;        
   --bad: #f87171;         
-  --line: #1e293b;        /* Subtle borders */
-  --field: #0d1320;       /* Dark input fields */
+  --line: #23314d;        
+  --field: #0b111e;       
+  --btn-bg: #19243b;      
+  --btn-hover: #22314f;   
+  --btn-line: #3f5580;    
 }
 
 /* Day Shift / Light Mode kapag pinindot ang toggle */
@@ -38,17 +41,59 @@
   --accent-ink: #ffffff;
   --warn: #a16207;
   --bad: #b91c1c;
-  --line: #dbe3ef;
+  --line: #cbd5e1;
   --field: #f8fafd;
+  --btn-bg: #ffffff;
+  --btn-hover: #f1f5f9;
+  --btn-line: #94a3b8; /* Malinaw na dark gray/blue border para kitang-kita sa light mode */
 }
 
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:env(safe-area-inset-bottom);transition:background 0.25s ease,color 0.25s ease}
 button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 14px;min-height:44px;transition:all 0.2s ease}
-button.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent;font-weight:700}
-button.primary:hover{filter:brightness(1.1)}
-button.danger{color:var(--bad)}button:disabled{opacity:.5}
+
+/* Tactile & Visible Buttons */
+button {
+  cursor: pointer;
+  border: 1.5px solid var(--btn-line);
+  background: var(--btn-bg);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 10px 14px;
+  min-height: 44px;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  transition: all 0.15s ease;
+}
+button:hover:not(:disabled) {
+  background: var(--btn-hover);
+  border-color: var(--accent);
+}
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+button.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+  font-weight: 700;
+  box-shadow: none;
+}
+button.primary:hover:not(:disabled) {
+  background: var(--accent);
+  filter: brightness(1.08);
+}
+button.danger {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--bad);
+  border-color: rgba(248, 113, 113, 0.5);
+}
+button.danger:hover:not(:disabled) {
+  background: rgba(248, 113, 113, 0.22);
+  border-color: var(--bad);
+}
+button:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+
 input,select,textarea{width:100%;background:var(--field);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 textarea{resize:vertical;min-height:70px}input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 label{display:block;font-size:13px;color:var(--mute);margin-bottom:4px;font-weight:600}
@@ -66,7 +111,7 @@ details>summary{cursor:pointer;font-weight:700;list-style:none}details>summary::
 .mic{padding:6px 12px;min-height:38px}.mic.on{background:var(--bad);color:#fff;border-color:transparent}
 #micState{font-size:14px;color:var(--mute)}body[data-mic=on] #micState{color:var(--bad);font-weight:700}#interim{color:var(--mute);font-style:italic;min-height:1.4em;font-size:14px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chip{padding:6px 12px;min-height:36px;border-radius:99px;font-size:14px}
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:14px}
 pre{white-space:pre-wrap;word-break:break-word;background:var(--field);border:1px solid var(--line);border-radius:10px;padding:12px;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;margin:0;color:var(--ink)}
 .note-item{display:block;width:100%;text-align:left;margin-bottom:8px}.badge{display:inline-block;font-size:12px;padding:1px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mute);margin-right:6px}.badge.final{color:var(--accent);border-color:var(--accent)}
 .overlay{position:fixed;inset:0;z-index:20;background:var(--bg);display:grid;place-items:center;padding:20px}.overlay form{max-width:360px;width:100%}
@@ -75,55 +120,6 @@ dialog{width:min(640px,94vw);border:1px solid var(--line);border-radius:14px;bac
 #printArea{display:none}
 @media(max-width:560px){.vgrid{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.brand{width:100%}}
 @media print{body>*:not(#printArea){display:none!important}#printArea{display:block!important;background:#fff;color:#000;border:0;font-size:12pt}}
-
-/* Tactile & Visible Buttons for Both Shifts */
-button {
-  cursor: pointer;
-  border: 1.5px solid var(--btn-line, #cbd5e1);
-  background: var(--btn-bg, #ffffff);
-  color: var(--ink);
-  border-radius: 10px;
-  padding: 10px 14px;
-  min-height: 44px;
-  font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  transition: all 0.15s ease;
-}
-
-/* Day Shift / Light mode button explicit background & border */
-:root[data-theme="light"] body, html:not([data-theme="dark"]) {
-  --btn-bg: #ffffff;
-  --btn-hover: #f1f5f9;
-  --btn-line: #94a3b8; /* Mas madilim na border para kitang-kita ang gilid */
-}
-
-/* Night Shift / Dark mode button background & border */
-:root[data-theme="dark"] {
-  --btn-bg: #19243b;
-  --btn-hover: #22314f;
-  --btn-line: #3f5580;
-}
-
-button:hover:not(:disabled) {
-  background: var(--btn-hover);
-  border-color: var(--accent);
-}
-button:active:not(:disabled) {
-  transform: translateY(1px);
-}
-button.primary {
-  background: var(--accent);
-  color: var(--accent-ink);
-  border-color: transparent;
-  font-weight: 700;
-}
-button.danger {
-  background: rgba(248, 113, 113, 0.1);
-  color: var(--bad);
-  border-color: rgba(248, 113, 113, 0.4);
-}
-button:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
-  
 </style>
 </head>
 <body>
@@ -186,7 +182,12 @@ button:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
   <details id="chipsCard" class="card"><summary>Quick phrases</summary><p class="hint">Only insert statements that are true for your patient right now. Edit this list in Settings.</p><div id="chips" class="chips"></div></details>
 
   <div class="actions">
-    <button id="btnSave" class="primary">Save draft</button><button id="btnFinal">Finalize</button><button id="btnCopy">Copy</button><button id="btnTxt">Download .txt</button><button id="btnPrint">Print</button><button id="btnNew" class="danger">Clear form</button>
+    <button id="btnSave" class="primary">💾 Save draft</button>
+    <button id="btnFinal">✅ Finalize</button>
+    <button id="btnCopy">📋 Copy</button>
+    <button id="btnTxt">⬇️ Download .txt</button>
+    <button id="btnPrint">🖨️ Print</button>
+    <button id="btnNew" class="danger">🗑️ Clear form</button>
   </div>
   <details class="card"><summary>Preview</summary><pre id="preview"></pre></details>
 </section>
@@ -240,7 +241,6 @@ button:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
     localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark');
   }
 
-  // Default sa Night Shift ('dark') kung wala pang naka-save
   const saved = localStorage.getItem(THEME_KEY) || 'dark';
   applyTheme(saved);
 
@@ -259,5 +259,4 @@ button:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
 <!-- I-link mo dito ang repo.js -->
 <script src="repo.js"></script>
 </body>
-      </html>
-      
+</html>
