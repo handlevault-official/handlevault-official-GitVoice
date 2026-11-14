@@ -75,6 +75,55 @@ dialog{width:min(640px,94vw);border:1px solid var(--line);border-radius:14px;bac
 #printArea{display:none}
 @media(max-width:560px){.vgrid{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.brand{width:100%}}
 @media print{body>*:not(#printArea){display:none!important}#printArea{display:block!important;background:#fff;color:#000;border:0;font-size:12pt}}
+
+/* Tactile & Visible Buttons for Both Shifts */
+button {
+  cursor: pointer;
+  border: 1.5px solid var(--btn-line, #cbd5e1);
+  background: var(--btn-bg, #ffffff);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 10px 14px;
+  min-height: 44px;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.15s ease;
+}
+
+/* Day Shift / Light mode button explicit background & border */
+:root[data-theme="light"] body, html:not([data-theme="dark"]) {
+  --btn-bg: #ffffff;
+  --btn-hover: #f1f5f9;
+  --btn-line: #94a3b8; /* Mas madilim na border para kitang-kita ang gilid */
+}
+
+/* Night Shift / Dark mode button background & border */
+:root[data-theme="dark"] {
+  --btn-bg: #19243b;
+  --btn-hover: #22314f;
+  --btn-line: #3f5580;
+}
+
+button:hover:not(:disabled) {
+  background: var(--btn-hover);
+  border-color: var(--accent);
+}
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+button.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+  font-weight: 700;
+}
+button.danger {
+  background: rgba(248, 113, 113, 0.1);
+  color: var(--bad);
+  border-color: rgba(248, 113, 113, 0.4);
+}
+button:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+  
 </style>
 </head>
 <body>
